@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- jQuery -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+    <!-- Icons -->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <!-- plotly -->
+    <script src="https://cdn.plot.ly/plotly-1.2.0.min.js"></script>
+    <!-- Bootstrap stylesheet -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <!-- Custom style sheets -->
+    <link rel="stylesheet" href="static/css/table.css">
+    <link rel="stylesheet" href="static/css/modal.css">
+    <link rel="stylesheet" href="static/css/misc.css">
+    <!-- https://developers.google.com/web/tools/lighthouse/audits/has-viewport-meta-tag -->
+    <meta name = "viewport" content = "width = device-width, initial-scale = 1">
+    <!-- Favicon links -->
+    <link rel="shortcut icon" type="image/jpg" href="public_html/muxing.jpg">
+    <link rel="apple-touch-icon" href="public_html/muxing.jpg">
+    <link rel="icon" sizes="192x192" href="public_html/muxing.jpg">
+    <!-- Used to create hover info. Not implemented in app. for reference: https://popper.js.org/ -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <!-- Bootstrap provides JS as well as CSS. Not used in the template but is standard to include it -->
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+</head>
+<body>
+
+  <!-- 'bg-dark' refers to a bootstrap standard background color. You can find
+  more colors here: https://getbootstrap.com/docs/4.0/utilities/colors/ -->
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <div class="container nav-width">
+      <a class="navbar-brand" href="{{ url_for('home') }}">Home</a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse"
+              data-target="#navbarSupportedContent"
+              aria-controls="navbarSupportedContent"
+              aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav mr-auto">
+          <li class="nav-item">
+            <a class="nav-link" id="results" href="{{ url_for('results') }}">
+              Results
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" id="analytics" href="{{ url_for('analytics') }}">
+              Analytics
+            </a>
+          </li>
+          <li class="nav-item">
+              <!-- To rename a page, you should change the 
+              below attributes in the following locations:
+                  Python render template function should equal file name in directory
+                  {# {{ url_for('sandbox') }} #} should equal python function name
+                  url_for('page') is used as a convenience function in place of actual URL
+                  id="" should not need to match anything and is only used to refer to the element 
+              It is not required but you will also obvious want to change the
+              below text in the below <a href=""></a> as well as the name of 
+              the name URL in in the @app.route('/') in the app.py func-->
+            <a class="nav-link" id="sandbox" href="{{ url_for('sandbox') }}">
+              Sand Box
+            </a>
+          </li>
+        </ul>
+        <div class="my-2 my-lg-0">
+          <ul class="navbar-nav mr-auto">
+            <li class="nav-item">
+              <!-- Title / company / project name -->
+              <a class="navbar-brand align-middle" href="#">MuxSignal Test</a>
+            </li>
+            <li class="nav-item">
+              <!-- For best results, ues a PNG with a transparent background.
+              A simple decent way to remove a background is with this free
+              online tool: https://www.remove.bg/
+              You can also do this in PhotoShop or GIMP
+              Note that images are sized automatically
+              Please avoid uploading large images for the sake of render speed -->
+              <img id="nav-logo" src="static/logo.jpg">
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+{% block content %}
+
+<!-- This is Jinja2 block where the contents of a template (e.g. home.html)
+will populate -->
+
+{% endblock %}
+
+<script>
+
+    // Highlights active page
+    $(document).ready(function() {
+      $("#{{ request.endpoint }}").parent().addClass("active");
+    })
+
+</script>
+
+</body>
+</html>

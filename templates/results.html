@@ -1,0 +1,53 @@
+{% extends 'template.html' %}
+
+{% block header %}
+{% endblock %}
+
+{% block content %}
+
+    <div class="row">
+       <div class="center-table" style="max-width:90%;max-height:500px;">
+         <table id="data-table" class="table table-striped">
+           <!-- Populated by generateTable() on page load -->
+         </table>
+       </div>
+     </div>
+
+<script>
+
+ // Generates a table one row at a time
+    function generateTable(tableData) {
+      var table = '';
+      var keys = Object.keys(Object.values(tableData)[0]);
+      table += "<thead class='thead-dark'><tr>";
+      for (let i in keys) {
+        table += `<th class="align-middle">${keys[i]}</th>`;
+      }
+      table += "</tr></thead>"
+      $.each(tableData, function(key, value) {
+        table += "<tr>";
+        for (let i = 0; i < keys.length; i++) {
+          table += `<td>${value[keys[i]]}</td>`
+        }
+        table += "</tr>"
+      });
+      document.getElementById("data-table").innerHTML = table;
+    }
+
+
+    // Renders the CSV (note that static directory requirement)
+        $.ajax({
+         data: {
+            file_name: 'btc_data.csv'
+          },
+          type: "POST",
+          url: "/show_csv",
+          success: function(data) {
+            parsedData = JSON.parse(data)
+            generateTable(parsedData);
+          }
+         });
+
+</script>
+
+{% endblock %}

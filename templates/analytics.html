@@ -1,0 +1,112 @@
+{% extends 'template.html' %}
+
+{% block header %}
+{% endblock %}
+
+{% block content %}
+
+<div class="row d-flex justify-content-center">
+  <h2>Analytics Strategy Trade Signals Coming Soon</h2>
+</div>
+
+<hr>
+
+<div class="container center-align">
+  <div class="row center-align">
+    <div id="chart2">
+      <!-- Populated by plotly chart2 on page load -->
+    </div>
+  </div>
+</div>
+
+
+<br><br><br><br>
+
+<script>
+
+    ///////////////////////////////////////////////////////////////////////////
+    //                               Get Data                                //
+    ///////////////////////////////////////////////////////////////////////////
+    
+    // {#
+    // {{ data|tojson }} - Jinja2 technique for reading a variable sent as 
+    // paramters by a function.
+    // Syntax explanation:
+    //   {{}} - Let's JavaScript know that we're using Jinja2 logic
+    //   data - Variable passed from the app.py file
+    //   tojson - Let's the application know that it's a json file
+    //   | - pipe command, pipes the data to the tojson function
+
+    // function getData(data) {
+    //   return data
+    // }
+    // #}
+
+    var data1 = JSON.parse({{ graphJSON1|tojson }});
+    var data2 = JSON.parse({{ graphJSON2|tojson }});
+
+
+    ///////////////////////////////////////////////////////////////////////////
+    //                             Plotly Charts                             //
+    ///////////////////////////////////////////////////////////////////////////
+    
+    //==========                      Chart 1                      ==========//
+
+    var labs = Object.keys(data1);
+    var vals = Object.values(data1);
+    var hover = Object.entries(data1).map(
+                x => `${x[0]} has a <br>value of ${x[1]}`)
+
+    var layout = {
+      title: "State Level Prognostics",
+      xaxis: {title: "State"},
+      yaxis: {title: "Average Predicted Attrition", tickformat: ",.0%"}
+    }
+
+   // Plotly.plot("chart1", [{
+   //   y: vals,
+   //   x: labs,
+   //   type: "bar",
+   //   text: hover,
+   //   hoverinfo: "text",
+   //   marker: {"color": vals, "colorscale": "Viridis"}
+   // }],
+   // layout);
+
+    //==========                      Chart 2                      ==========//
+
+    var labs = Object.keys(data2);
+    var valgrade = data2["valuegrade"]
+    var x = Object.values(valgrade); 
+    console.log(valgrade)
+    var predprob = data2["predprob"]
+    var y = Object.values(predprob); 
+    console.log(predprob)
+    console.log(x)
+    
+    var hover = [];
+    for (let i = 0; i < x.length; i++) {
+      hover.push(`empid:${x[i]}, <br>predprob:${y[i]}`)   
+      } 
+   
+
+    var layout = {
+      title: "Predictions",
+      xaxis: {title: "Strength"},
+      yaxis: {title: "Predicted Score", tickformat: ",.0%"}
+    }
+
+    Plotly.plot("chart2", [{
+      y: y,
+      x: x,
+      type: "scatter",
+      text: hover,
+      mode: "markers",
+      hoverinfo: "text",
+      marker: {"color": vals, "reversescale": true, "colorscale": "Cividis"}
+    }],
+    layout);
+
+</script>
+
+{% endblock %}
