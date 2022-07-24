@@ -1,0 +1,27 @@
+/* Standard table formatting is ugly.
+Below are a few quick fixes */
+table {
+  border-collapse: collapse;
+}
+td, th {
+  min-width: 8rem;
+  height: 5rem;
+  text-align: center;
+}
+th {
+  font-weight: bold;
+  border-color: white;
+}
+.table-narrow {
+  height: 3rem;
+}
+.center-table {
+    width: 85%;
+    margin-left: 7.5%;
+    margin-right: 7.5%;
+    text-align: center;
+    overflow-y: auto;
+}
+.hova {
+  background-color: #f0f3ff;
+}

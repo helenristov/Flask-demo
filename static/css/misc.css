@@ -1,0 +1,17 @@
+/* Prevents unnecessary horizontal scrolling */
+body {
+  overflow-x: hidden;
+}
+
+/* Note that the below functions use `rem` instead of pixels as they provide
+relative sizes and produce better results on screens on varying sizes */
+.nav-width {
+  style="max-width:75rem;
+}
+#nav-logo {
+ height: 2.5rem;
+}
+/* Add space below nav bar so elements aren't flush */
+nav {
+  margin-bottom: 1rem;
+}
